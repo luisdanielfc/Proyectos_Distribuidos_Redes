@@ -18,6 +18,7 @@ import java.net.Socket;
  */
 public class Servidor {
     
+    public Servidor(){}
      /**
      * @param args the command line arguments
      */

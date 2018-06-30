@@ -20,6 +20,7 @@ import java.util.Date;
  */
 public class Cliente {
 
+    public Cliente(){}
     /**
      * @param args the command line arguments
      */
