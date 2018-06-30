@@ -38,9 +38,9 @@ public class Servidor {
         
         oos.writeObject(paquete);
         System.out.println("he terminao");
-        
+        socket.close();
         Cliente c = new Cliente();
-        c.start(port+1);
+        c.start(port);
         /*
         ServerSocket ss = new ServerSocket(port);
         System.out.println("Servidor iniciado, esperando");

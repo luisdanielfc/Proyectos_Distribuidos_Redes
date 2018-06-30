@@ -21,21 +21,22 @@ public class Sender {
           
     }
     
-    public void start(int port) throws IOException{
-        String ip = "127.0.0.1";
+    public void start(int port, int origen) throws IOException{
+        String ip = "192.168.250.3";
         //int port = 4001;
-        Socket socket = new Socket("localhost", port);
+        Socket socket = new Socket(ip, port);
         ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
         ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
         System.out.println("Enviar preparando...");
         Paquete paquete = new Paquete();
-        paquete.setOrigen(127);
+        paquete.setOrigen(origen);
         paquete.setDestino(port);
         paquete.setTime(123);
         System.out.println("Enviar paquete..."+paquete.getOrigen());
         
         oos.writeObject(paquete);
         System.out.println("he terminao");
+        socket.close();
     }
     
 }

@@ -22,7 +22,7 @@ public class Cliente {
     
     public void start(int port) throws IOException, ClassNotFoundException{
         //int port = 4000;
-        ServerSocket ss = new ServerSocket(port);
+        ServerSocket ss = new ServerSocket(port+1);
         System.out.println("Servidor iniciado, esperando");
         
         
@@ -38,8 +38,10 @@ public class Cliente {
            System.out.println(paquete.getDestino());
            System.out.println(paquete.getOrigen());
            System.out.println(paquete.getTime());
-           
+           socket.close();
            break;
         }
+        ss.close();
+        
     }
 }

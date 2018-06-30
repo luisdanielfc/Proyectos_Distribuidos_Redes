@@ -48,7 +48,7 @@ public class Cliente {
         int port = 4000;
         ServerSocket ss = new ServerSocket(port);
         System.out.println("Servidor iniciado, esperando");
-        
+         Paquete paquete = new Paquete();
         
         while(true){
             Socket socket = ss.accept();
@@ -56,18 +56,18 @@ public class Cliente {
              ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
             ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
             
-           Paquete paquete = new Paquete();
+          
            paquete = (Paquete)ois.readObject();
            
            System.out.println(paquete.getDestino());
            System.out.println(paquete.getOrigen());
            System.out.println(paquete.getTime());
-           
+           socket.close();
            break;
         }
-        
+        ss.close();
         Sender sender = new Sender();
-        sender.start(port+1);
+        sender.start(port, paquete.getOrigen()+1);
     }
     
 }
