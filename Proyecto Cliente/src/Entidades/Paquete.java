@@ -5,11 +5,13 @@
  */
 package Entidades;
 
+import java.io.Serializable;
+
 /**
  *
  * @author luisfrediani
  */
-public class Paquete {
+public class Paquete implements Serializable {
     double time;
     int origen;
     int destino;

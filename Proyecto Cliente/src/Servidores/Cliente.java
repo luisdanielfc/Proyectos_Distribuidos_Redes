@@ -32,14 +32,15 @@ public class Cliente {
         //System.out.println( sdf.format(cal.getTime()) );
         String ip = "127.0.0.1";
         int port = 4000;
-        Socket socket = new Socket(ip, port);
+        Socket socket = new Socket("localhost", port);
         ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
         ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
-        
+        System.out.println("Enviar preparando...");
         Paquete paquete = new Paquete();
-        paquete.setOrigen(Integer.parseInt(ip));
+        paquete.setOrigen(127);
         paquete.setDestino(port);
         paquete.setTime(123);
+        System.out.println("Enviar paquete...");
         
         oos.writeObject(paquete);
         System.out.println("he terminao");
