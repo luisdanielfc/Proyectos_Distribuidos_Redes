@@ -9,6 +9,7 @@ import Entidades.*;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.ServerSocket;
 import java.net.Socket;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -24,13 +25,13 @@ public class Cliente {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
         // TODO code application logic here
         //Calendar cal = Calendar.getInstance();
         //SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
         //String date = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
         //System.out.println( sdf.format(cal.getTime()) );
-        String ip = "127.0.0.1";
+        /*String ip = "127.0.0.1";
         int port = 4000;
         Socket socket = new Socket("localhost", port);
         ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
@@ -43,7 +44,30 @@ public class Cliente {
         System.out.println("Enviar paquete...");
         
         oos.writeObject(paquete);
-        System.out.println("he terminao");
+        System.out.println("he terminao");*/
+        int port = 4000;
+        ServerSocket ss = new ServerSocket(port);
+        System.out.println("Servidor iniciado, esperando");
+        
+        
+        while(true){
+            Socket socket = ss.accept();
+            System.out.println("Entro socket");
+             ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
+            ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
+            
+           Paquete paquete = new Paquete();
+           paquete = (Paquete)ois.readObject();
+           
+           System.out.println(paquete.getDestino());
+           System.out.println(paquete.getOrigen());
+           System.out.println(paquete.getTime());
+           
+           break;
+        }
+        
+        Sender sender = new Sender();
+        sender.start(port+1);
     }
     
 }

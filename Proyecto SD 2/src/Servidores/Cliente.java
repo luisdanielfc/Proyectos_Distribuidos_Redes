@@ -16,32 +16,12 @@ import java.net.Socket;
  *
  * @author luisfrediani
  */
-public class Servidor {
+public class Cliente {
     
-    public Servidor(){}
-     /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) throws IOException, ClassNotFoundException {
-        // TODO code application logic here
-        String ip = "127.0.0.1";
-        int port = 4000;
-        Socket socket = new Socket("localhost", port);
-        ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
-        ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
-        System.out.println("Enviar preparando...");
-        Paquete paquete = new Paquete();
-        paquete.setOrigen(127);
-        paquete.setDestino(port);
-        paquete.setTime(123);
-        System.out.println("Enviar paquete..."+paquete.getOrigen());
-        
-        oos.writeObject(paquete);
-        System.out.println("he terminao");
-        
-        Cliente c = new Cliente();
-        c.start(port+1);
-        /*
+    public Cliente(){}
+    
+    public void start(int port) throws IOException, ClassNotFoundException{
+        //int port = 4000;
         ServerSocket ss = new ServerSocket(port);
         System.out.println("Servidor iniciado, esperando");
         
@@ -60,9 +40,6 @@ public class Servidor {
            System.out.println(paquete.getTime());
            
            break;
-        }*/
-        
-       
+        }
     }
-    
 }
