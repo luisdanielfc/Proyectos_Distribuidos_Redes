@@ -3,36 +3,33 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Entities;
+package Entidades;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  *
  * @author luisfrediani
  */
-public class Transporte {
-    int capacidad = 5;
-    String origen;
-    ArrayList<Paquete> paquetes = new ArrayList<Paquete>(5);
+public class Transporte implements Serializable {
+    int origen;
+    ArrayList<Paquete> paquetes = new ArrayList<Paquete>();
+    long time;
 
     public Transporte() {
-        
     }
 
-    public int getCapacidad() {
-        return capacidad;
+    public Transporte(int origen, long time) {
+        this.origen = origen;
+        this.time = time;
     }
 
-    public void setCapacidad(int capacidad) {
-        this.capacidad = capacidad;
-    }
-
-    public String getOrigen() {
+    public int getOrigen() {
         return origen;
     }
 
-    public void setOrigen(String origen) {
+    public void setOrigen(int origen) {
         this.origen = origen;
     }
 
@@ -43,5 +40,16 @@ public class Transporte {
     public void setPaquetes(ArrayList<Paquete> paquetes) {
         this.paquetes = paquetes;
     }
+
+    public double getTime() {
+        return time;
+    }
+
+    public void setTime(long time) {
+        this.time = time;
+    }
+    
+    
+    
     
 }
