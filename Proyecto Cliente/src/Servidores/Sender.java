@@ -42,7 +42,7 @@ public class Sender implements Runnable {
     @Override
     public void run() {
         
-        String ip = "127.0.0.1";
+        String ip = "192.168.250.3";
         Socket socket;
         
         try {

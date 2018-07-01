@@ -49,7 +49,7 @@ public class Servidor implements Runnable {
      /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) throws IOException, ClassNotFoundException, InterruptedException {
+    public static void main(String[] args) throws IOException, ClassNotFoundException, InterruptedException, RemoteException, NotBoundException {
         
         Scanner s = new Scanner(System.in);
         ArrayList<Transporte> transportes = new ArrayList<Transporte>();
@@ -61,7 +61,10 @@ public class Servidor implements Runnable {
                 int x = Integer.parseInt(o);
                 Transporte t = new Transporte();
                 t.setOrigen(1);
-                ArrayList<Paquete> paquetes = new ArrayList<Paquete>(5);
+                ArrayList<Paquete> paquetes = new ArrayList<Paquete>();
+                Registry myReg = LocateRegistry.getRegistry("192.168.250.7", 1099);
+                IServidorEstadistica ise = (IServidorEstadistica) myReg.lookup("mi_estadistica");
+           
             
                 for(int j = 0; j < x; j++){               
                     Paquete p = new Paquete();
@@ -83,6 +86,7 @@ public class Servidor implements Runnable {
                 t.setTime(time);
                 t.setPaquetes(paquetes);
                 transportes.add(t);
+                ise.paqueteEnviado();
                 System.out.println("Transporte "+(i+1)+" Listo");               
             }
             
@@ -114,7 +118,7 @@ public class Servidor implements Runnable {
             PrintWriter pw = new PrintWriter(socket.getOutputStream(), true);
             BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             String s = null;
-            Registry myReg = LocateRegistry.getRegistry("127.0.0.1", 1099);
+            Registry myReg = LocateRegistry.getRegistry("192.168.250.7", 1099);
             IServidorEstadistica ise = (IServidorEstadistica) myReg.lookup("mi_estadistica");
             //pw.print("syn");
             
@@ -133,6 +137,7 @@ public class Servidor implements Runnable {
            // if("ack".equals(s)){
                 //System.out.println("Recibi ACK");
                 if(t.getPaquetes().size() == 5){
+                    
                     ise.tiempoConCargaMaxima(10);
                 }
                 oos.writeObject(t);
@@ -155,7 +160,9 @@ public class Servidor implements Runnable {
             Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NotBoundException ex) {
             Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
-        } 
+        } catch (UnsupportedOperationException ex){
+            ex.printStackTrace();
+        }
    }
     
     public String check(){
