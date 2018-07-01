@@ -59,16 +59,18 @@ public class Cliente implements Runnable {
             ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
             int cont = 0;
             
-            while(cont < 3){
+            //while(cont < 3){
                 Transporte t = new Transporte();
                 t = (Transporte)ois.readObject();
+                ss.close();
                 Sender s = new Sender(t, port+10);
-                Thread thr = new Thread(s);
-                thr.start();
-                cont++;
-            }
+                s.run();
+                //Thread thr = new Thread(s);
+                //thr.start();
+                //cont++;
+            //}
             
-            ss.close();
+            //ss.close();
         
         } catch (EOFException ex) {
             Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);

@@ -52,22 +52,25 @@ public class Sender implements Runnable {
                 System.out.println("Procesando paquete...");
                 TimeUnit.SECONDS.sleep(10);
                 
-                if (transporte.getPaquetes().get(cont).getDestino() == 2)
+                if (transporte.getPaquetes().get(cont).getDestino() == 2){
                     System.out.println("Paquete "+transporte.getPaquetes().get(cont).getNombre()+" Procesado");
-                else
+                    transporte.getPaquetes().remove(cont);
+                }    
+                else{
                     System.out.println("Paquete "+transporte.getPaquetes().get(cont).getNombre()+" no es de aqui, moviendo al camion");
-                              
+                }              
                 System.out.println("Montando paquete...");
                 cont++;
             }
             
-            System.out.println("Saliero un camion...");
-            TimeUnit.SECONDS.sleep(20);
+            
             System.out.println("Conectandose al puerto de principal: "+port);
             socket = new Socket(ip, port);
             ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
-            ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
+            ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());   
             oos.writeObject(transporte);
+            System.out.println("Salio un camion...");
+            TimeUnit.SECONDS.sleep(20);
             socket.close();
             System.out.println("he terminado");
             

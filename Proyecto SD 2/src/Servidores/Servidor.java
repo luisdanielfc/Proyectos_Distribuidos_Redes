@@ -108,9 +108,10 @@ public class Servidor implements Runnable {
             //}
 
             socket.close();
-            Cliente c = new Cliente(port + 10);
-            Thread t1 = new Thread(c);
-            t1.start();
+            Cliente c = new Cliente(port+10);
+            c.run();
+            //Thread t1 = new Thread(c);
+            //t1.start();
         
             
         } catch (IOException ex) {
