@@ -7,6 +7,7 @@ package Servidores;
 
 import Entidades.Paquete;
 import Entidades.Transporte;
+import implementacionestadistica.IServidorEstadistica;
 import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.IOException;
@@ -17,6 +18,10 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Scanner;
@@ -109,6 +114,8 @@ public class Servidor implements Runnable {
             PrintWriter pw = new PrintWriter(socket.getOutputStream(), true);
             BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             String s = null;
+            Registry myReg = LocateRegistry.getRegistry("127.0.0.1", 1099);
+            IServidorEstadistica ise = (IServidorEstadistica) myReg.lookup("mi_estadistica");
             //pw.print("syn");
             
             /*
@@ -125,7 +132,9 @@ public class Servidor implements Runnable {
             
            // if("ack".equals(s)){
                 //System.out.println("Recibi ACK");
-             
+                if(t.getPaquetes().size() == 5){
+                    ise.tiempoConCargaMaxima(10);
+                }
                 oos.writeObject(t);
                 System.out.println("Transporte Salio al puerto: "+port);
             //}
@@ -143,6 +152,8 @@ public class Servidor implements Runnable {
             
         } catch (IOException ex) {
             //System.out.println("se cayo el gafo");
+            Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NotBoundException ex) {
             Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
         } 
    }
