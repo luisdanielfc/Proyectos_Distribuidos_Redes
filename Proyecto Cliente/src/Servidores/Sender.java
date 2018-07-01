@@ -75,7 +75,8 @@ public class Sender implements Runnable {
             System.out.println("he terminado");
             
         } catch (EOFException ex) {
-            Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+            //Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("se cayo el tipo");
         } catch (IOException ex) {
             Logger.getLogger(Sender.class.getName()).log(Level.SEVERE, null, ex);
         } catch (InterruptedException ex) {

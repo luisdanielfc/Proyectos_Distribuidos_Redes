@@ -7,14 +7,21 @@ package Servidores;
 
 import Entidades.Paquete;
 import Entidades.Transporte;
+import java.io.BufferedReader;
+import java.io.DataInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Scanner;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -96,13 +103,33 @@ public class Servidor implements Runnable {
         
         try {
             socket = new Socket("localhost", port);
+            //socket.();
             ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
             ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
-            int cont = 0;
+            PrintWriter pw = new PrintWriter(socket.getOutputStream(), true);
+            BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            String s = null;
+            //pw.print("syn");
             
-            //while(cont < 3){
+            /*
+            int cont = 0;
+            while(cont < 500){
+                if(br.ready()){
+                    s = br.readLine();
+                    break;
+                }
+                else cont++;
+                
+            }*/
+            
+            
+           // if("ack".equals(s)){
+                //System.out.println("Recibi ACK");
+             
                 oos.writeObject(t);
                 System.out.println("Transporte Salio al puerto: "+port);
+            //}
+            
                 //TimeUnit.SECONDS.sleep(5);
                 //cont++;
             //}
@@ -115,8 +142,22 @@ public class Servidor implements Runnable {
         
             
         } catch (IOException ex) {
+            //System.out.println("se cayo el gafo");
             Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
         } 
    }
+    
+    public String check(){
+        String[] ips = null;
+        //Estan en el orden de sucesores
+        ips[0] = "";
+        ips[1] = "";
+        ips[2] = "";
+        ips[3] = "";
+        ips[4] = "";
+        ips[5] = "";
+        
+        return null;
+    }
     
 }
