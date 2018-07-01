@@ -64,7 +64,7 @@ public class Servidor implements Runnable {
                 ArrayList<Paquete> paquetes = new ArrayList<Paquete>();
                 Registry myReg = LocateRegistry.getRegistry("192.168.250.7", 1099);
                 IServidorEstadistica ise = (IServidorEstadistica) myReg.lookup("mi_estadistica");
-           
+                int add=5;
             
                 for(int j = 0; j < x; j++){               
                     Paquete p = new Paquete();
@@ -77,6 +77,10 @@ public class Servidor implements Runnable {
                     cal.set(Calendar.SECOND, 0);
                     long time = cal.getTimeInMillis();
                     p.setTime(time);
+                    add = add*i;
+                    float tiempo = (p.getDestino()-1)*20 + (p.getDestino()-1)*10 + add;
+                    ise.paqueteEnviado();
+                    ise.tiempoDeEnvioPaquete(tiempo);
                     paquetes.add(p);
                 }
             
@@ -86,7 +90,7 @@ public class Servidor implements Runnable {
                 t.setTime(time);
                 t.setPaquetes(paquetes);
                 transportes.add(t);
-                ise.paqueteEnviado();
+                
                 System.out.println("Transporte "+(i+1)+" Listo");               
             }
             

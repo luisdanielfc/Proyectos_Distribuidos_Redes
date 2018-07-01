@@ -6,6 +6,7 @@
 package Servidores;
 
 import Entidades.*;
+import implementacionestadistica.IServidorEstadistica;
 import java.io.BufferedReader;
 import java.io.EOFException;
 import java.io.IOException;
@@ -15,6 +16,10 @@ import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -72,8 +77,14 @@ public class Cliente implements Runnable {
             //while(cont < 3){
             Transporte t = new Transporte();
             t = (Transporte)ois.readObject();
+            Registry myReg = LocateRegistry.getRegistry("192.168.250.7", 1099);
+            IServidorEstadistica ise = (IServidorEstadistica) myReg.lookup("mi_estadistica");
+            if(t.getPaquetes().size() == 5){
+                    
+                ise.tiempoConCargaMaxima(10);
+            }
             ss.close();
-            Sender s = new Sender(t, port+10);
+            Sender s = new Sender(t, port);
             s.run();
                 //Thread thr = new Thread(s);
                 //thr.start();
@@ -88,6 +99,8 @@ public class Cliente implements Runnable {
         } catch (IOException ex) {
             Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NotBoundException ex) {
             Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
         }
       }
