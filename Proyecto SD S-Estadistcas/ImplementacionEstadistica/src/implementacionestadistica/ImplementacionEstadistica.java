@@ -27,7 +27,7 @@ public class ImplementacionEstadistica extends UnicastRemoteObject implements IS
 
     @Override
     public void tiempoDeEnvioPaquete(float t) throws RemoteException {
-        this.tEnvioTotal += t; 
+        this.tEnvioTotal += t;
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -50,7 +50,11 @@ public class ImplementacionEstadistica extends UnicastRemoteObject implements IS
     }
     
     public float getPromedioEnvioYLlegada() {
-        return this.tEnvioTotal / this.cPaquetes;
+        if(this.cPaquetes != 0){
+            return this.tEnvioTotal / this.cPaquetes;             
+        } 
+        
+        return 0;
     }
     
     public int cantidadPaquetesReenviados() {
@@ -58,10 +62,15 @@ public class ImplementacionEstadistica extends UnicastRemoteObject implements IS
     }
     
     public float porcentajeConCargaMax() {
-        return this.tEnvioCargaMax * 100 / this.tEnvioTotal;
+        if(this.tEnvioTotal != 0)
+            return this.tEnvioCargaMax * 100 / this.tEnvioTotal;
+        
+        return 0;
     }
     
     public float porcentajeEntranYSalen() {
-        return this.cPaquetesPrimerIntento * 100 / this.cPaquetes;
+        if(this.cPaquetes != 0)
+            return this.cPaquetesPrimerIntento * 100 / this.cPaquetes;
+        return 0;
     }
 }
