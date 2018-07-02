@@ -2,7 +2,6 @@ package implementacionestadistica;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-import servidorestadistica.ServidorSocketEstadistica;
 
 public class ImplementacionEstadistica extends UnicastRemoteObject implements IServidorEstadistica{
     private int cPaquetes; 
