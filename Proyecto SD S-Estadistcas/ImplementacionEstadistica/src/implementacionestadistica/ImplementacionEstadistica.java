@@ -35,11 +35,13 @@ public class ImplementacionEstadistica extends UnicastRemoteObject implements IS
 
     @Override
     public void tiempoConCargaMaxima(float t) throws RemoteException {
+        this.tEnvioTotal += t;
         this.tEnvioCargaMax += t; 
     }
 
     @Override
     public void paquetePrimerIntento() throws RemoteException {
+        this.cPaquetes++;
         this.cPaquetesPrimerIntento++;
     }
     
@@ -56,6 +58,7 @@ public class ImplementacionEstadistica extends UnicastRemoteObject implements IS
     }
     
     public float porcentajeConCargaMax() {
+        
         if(this.tEnvioTotal != 0)
             return this.tEnvioCargaMax * 100 / this.tEnvioTotal;
         
