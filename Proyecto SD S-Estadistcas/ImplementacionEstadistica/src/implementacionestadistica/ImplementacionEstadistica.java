@@ -26,7 +26,6 @@ public class ImplementacionEstadistica extends UnicastRemoteObject implements IS
     @Override
     public void tiempoDeEnvioPaquete(float t) throws RemoteException {
         this.tEnvioTotal += t;
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
