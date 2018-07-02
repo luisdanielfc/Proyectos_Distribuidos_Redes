@@ -21,7 +21,6 @@ public class ImplementacionEstadistica extends UnicastRemoteObject implements IS
     @Override
     public void paqueteEnviado() throws RemoteException {
         this.cPaquetes++;
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -33,19 +32,16 @@ public class ImplementacionEstadistica extends UnicastRemoteObject implements IS
     @Override
     public void paqueteReenviado() throws RemoteException {
         this.cPaquetesReenviados++;
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public void tiempoConCargaMaxima(float t) throws RemoteException {
         this.tEnvioCargaMax += t; 
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public void paquetePrimerIntento() throws RemoteException {
         this.cPaquetesPrimerIntento++;
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     public float getPromedioEnvioYLlegada() {
