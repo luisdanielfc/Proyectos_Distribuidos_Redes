@@ -6,10 +6,13 @@
 package Servidores;
 
 import Entidades.*;
+import java.io.BufferedReader;
 import java.io.EOFException;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.text.SimpleDateFormat;
@@ -57,14 +60,21 @@ public class Cliente implements Runnable {
             System.out.println("Entro socket por el puerto: "+port);
             ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
             ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
+            PrintWriter pw = new PrintWriter(socket.getOutputStream(), true);
+            BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            /*
             int cont = 0;
             
+            String st = br.readLine();
+            if("syn".equals(st)){
+                pw.print("arck");
+            }*/
             //while(cont < 3){
-                Transporte t = new Transporte();
-                t = (Transporte)ois.readObject();
-                ss.close();
-                Sender s = new Sender(t, port+10);
-                s.run();
+            Transporte t = new Transporte();
+            t = (Transporte)ois.readObject();
+            ss.close();
+            Sender s = new Sender(t, port+10);
+            s.run();
                 //Thread thr = new Thread(s);
                 //thr.start();
                 //cont++;
@@ -73,7 +83,8 @@ public class Cliente implements Runnable {
             //ss.close();
         
         } catch (EOFException ex) {
-            Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+            //Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Se cayeron los gafos");
         } catch (IOException ex) {
             Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
